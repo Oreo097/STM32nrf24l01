@@ -47,9 +47,9 @@ void NRF_INIT_RX();
 
 void NRF_INIT_TX();
 
-void NRF_CE();
+void NRF_CE(uint8_t status);
 
-void NRF_CSN();
+void NRF_CSN(uint8_t status);
 
 
 // /*command word*/
@@ -62,5 +62,16 @@ void NRF_CSN();
 // #define W_TX_PAYLOAD 160
 // #define FLUSH_TX 225
 // #define FLUSH_RX 226
+
+
+uint8_t nrf_write_reg(uint16_t regaddr,uint8_t *pdata,uint8_t size);
+
+uint8_t nrf_read_reg(uint16_t regaddr,uint8_t *pdata,uint8_t size);
+
+void nrf_set_channel(int channel);
+
+void nrf_set_rx_addr(uint8_t p,int * addr);
+
+void nrf_set_tx_addr(int * addr);
 
 #endif
