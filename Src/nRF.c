@@ -82,10 +82,20 @@ void NRF_INIT_RX()
     //初始化为RX模式
     //配置过程为
     //拉低CE
-    //配置
+    //配置接收地址
+    //使能通道接受地址
+    //设置RF通信频率
+    //选择通道0有效数据宽度
+    //开启低噪声增益
+    //设置CONFIG
+    //拉高CE
     uint8_t order;
     order = 0x0f;
     NRF_CE(0); //CE拉低开始配置
+    nrf_set_rx_addr();//设置RX地址
+    
+    
+    nrf_config_rx();//
 
     NRF_CE(1); //ce拉高进入RX模式
 }
@@ -137,7 +147,49 @@ void nrf_set_rx_addr(uint8_t p, int *addr) //设置RX pipe和地址
     }
 }
 
-void nrf_set_tx_addr(int *addr) //设置TX地址
+void nrf_set_tx_addr(uint8_t *addr) //设置TX地址
 {
     nrf_write_reg(TX_ADDR, addr, 5);
+}
+
+void nrf_en_rx_addr(uint8_t pipe)//使能接收addr
+{
+    switch(pipe)
+    {
+        case 0:nrf_write_reg(EN_RXADDR,,);
+        case 1:nrf_write_reg(EN_RXADDR,,);
+        case 2:nrf_write_reg(EN_RXADDR,,);
+        case 3:nrf_write_reg(EN_RXADDR,,);
+        case 4:nrf_write_reg(EN_RXADDR,,);
+        case 5:nrf_write_reg(EN_RXADDR,,);
+    }
+}
+
+void nrf_set_freq(uint8_t freq)//设置通信频率
+{
+    nrf_write_reg(RF_CH,freq,size0f(freq));
+}
+
+void nrf_set_setup(uint8_t config)//设置发射参数
+{
+    nrf_write_reg(RF_SETUP,config,sizeof(config));
+}
+
+void nrf_set_ploadw_rx(uint8_t pipe,uint8_t width)//设置接受数据宽度
+{
+    switch(pipe)
+    {
+        case 0:nrf_write_reg(RX_PW_P0,width,sizeof(width));
+        case 1:nrf_write_reg(RX_PW_P1,width,sizeof(width));
+        case 2:nrf_write_reg(RX_PW_P2,width,sizeof(width));
+        case 3:nrf_write_reg(RX_PW_P3,width,sizeof(width));
+        case 4:nrf_write_reg(RX_PW_P4,width,sizeof(width));
+        case 5:nrf_wirte_reg(RX_PW_P5,width,sizeof(width));
+    }
+}
+
+
+void NRF_REC(uint8_t * data)
+{
+    
 }
